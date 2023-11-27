@@ -2,6 +2,4 @@
 
 A group chat with a quorum.
 
-React native.
-
-More features to come.
+React Native. Firebase (Cloud Firestore).
