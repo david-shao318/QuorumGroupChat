@@ -25,6 +25,7 @@ project.xcworkspace
 
 # Bundle artifacts
 *.jsbundle
+GoogleService-Info.plist
 
 # CocoaPods
 /Pods/
