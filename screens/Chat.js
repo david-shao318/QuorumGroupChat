@@ -71,19 +71,13 @@ export default function Chat() {
               }
             }
 
-            if (availableShares.length >= global.quorum) {
-              return {
-                _id: doc.data()._id,
-                createdAt: doc.data().createdAt.toDate(),
-                text: Buffer.from(decodeSecret(availableShares), 'hex').toString('utf-8'),
-                user: doc.data().user
-              };
-            }
+            let messageHex = decodeSecret(availableShares);
+            let messageText = Buffer.from(messageHex, 'hex').toString('utf-8').replace(/\uFFFD/g, '');
 
             return {
               _id: doc.data()._id,
               createdAt: doc.data().createdAt.toDate(),
-              text: decodeSecret(availableShares),
+              text: messageText,
               user: doc.data().user
             };
           })
@@ -103,24 +97,31 @@ export default function Chat() {
       // where n is the number of users in the chat
       // QUORUM is set to n (all users must be present to decode the message)
       // TODO: change QUORUM to be a user-defined value
-      let encrypted = encodeSecret(text, Math.max(global.numUsers, 2), global.quorum);
-      let sharesByUser = {};
-
-      const collectionRef = collection(database, 'usernames');
-      const q = query(collectionRef, orderBy('name', 'desc'));
-      querySnapshot = getDocs(q).then((querySnapshot) => {
-        let i = 0
-        querySnapshot.forEach((doc) => {
-          sharesByUser[doc.data().email] = encrypted[i++];
-        });
+      getCountFromServer(collection(database, "usernames")).then((snapshot) => {
+        global.numUsers = snapshot.data().count;
+        global.quorum = global.numUsers;
       }).then(() => {
-        addDoc(collection(database, 'chats'), {
-          _id,
-          createdAt,
-          text,
-          user,
-          usersSeen: [auth?.currentUser?.email],
-          shares: sharesByUser
+        console.log(global.numUsers, global.quorum);
+        let encrypted = encodeSecret(text, Math.max(global.numUsers, 2), global.quorum);
+        let sharesByUser = {};
+        console.log(encrypted);
+
+        const collectionRef = collection(database, 'usernames');
+        const q = query(collectionRef, orderBy('name', 'desc'));
+        querySnapshot = getDocs(q).then((querySnapshot) => {
+          let i = 0
+          querySnapshot.forEach((doc) => {
+            sharesByUser[doc.data().email] = encrypted[i++];
+          });
+        }).then(() => {
+          addDoc(collection(database, 'chats'), {
+            _id,
+            createdAt,
+            text,
+            user,
+            usersSeen: [auth?.currentUser?.email],
+            shares: sharesByUser
+          })
         })
       }).then(() => {
         console.log('Message sent');
@@ -133,14 +134,7 @@ export default function Chat() {
         showAvatarForEveryMessage={false}
         showUserAvatar={false}
         renderUsernameOnMessage={true}
-        onSend={function (messages) {
-          const names = collection(database, "usernames");
-          getCountFromServer(names).then((snapshot) => {
-            global.numUsers = snapshot.data().count;
-            global.quorum = global.numUsers;
-          });
-          onSend(messages);
-        }}
+        onSend={(messages) => { onSend(messages) }}
         messagesContainerStyle={{
           backgroundColor: '#fff'
         }}
