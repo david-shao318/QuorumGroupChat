@@ -6,7 +6,7 @@ A group chat with a _quorum_.
 
 ## Demo
 
-Click the image below to see a demo ([https://youtu.be/44Xd-_JBUJs](url)).
+Click the image below to see a [demo](https://youtu.be/44Xd-_JBUJs).
 
 <a href="https://youtu.be/44Xd-_JBUJs" target="_blank"><img width="589" src="https://github.com/david-shao318/QuorumGroupChat/assets/57266876/8d8667cc-e5ff-4c91-b8d8-09b722b8bfd9"></a>
 
