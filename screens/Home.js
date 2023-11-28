@@ -8,10 +8,15 @@ import { auth, database } from '../config/firebase';
 import { updateProfile } from 'firebase/auth';
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 
+// home screen
+// TODO: add search feature to header
+// TODO: add profile picture CHANGE to header
+// TODO: add multiple chat group functionality and display in chat list
 const Home = () => {
 
     const navigation = useNavigation();
 
+    // update username upon first login
     if (auth?.currentUser?.displayName === null) {
         const usernamesQuery = query(collection(database, 'usernames'), where('email', '==', auth?.currentUser?.email));
         onSnapshot(usernamesQuery, (querySnapshot) => {
@@ -24,6 +29,7 @@ const Home = () => {
         });
     }
 
+    // set header options
     useEffect(() => {
         navigation.setOptions({
             headerLeft: () => (
@@ -42,6 +48,7 @@ const Home = () => {
         });
     }, [navigation]);
 
+    // navigate to chat screen
     return (
         <View style={styles.container}>
             <TouchableOpacity

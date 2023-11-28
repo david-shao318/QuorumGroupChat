@@ -269,11 +269,13 @@ let Shamir = {
 };
 
 
+// RETURNS HEX ENCODED SECRET using given shares
 export const encodeSecret = (secret, totalShares, requiredShares) => {
     let hexSecret = Buffer.from(secret).toString('hex');
     return Shamir.generateShares(hexSecret, totalShares, requiredShares);
 }
 
+// RETURNS HEX DECODED SECRET using given shares
 export const decodeSecret = (shares) => {
     return Shamir.deriveSecret(shares);
 }
