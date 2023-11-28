@@ -25,7 +25,7 @@ It is necessary to work over a finite field for encryption, as over the reals, f
 ## Installation
 
 1. Install packages with `yarn install` in the main directory. Front-end chat UI builds on react-native-gifted-chat.
-2. To run with Expo, use `yarn start`. In this state, you can switch between Expo Go and the included build for ios, and run ios, android, and web verions of the app.
+2. To run with Expo, use `yarn start`. In this state, you can switch between Expo Go and the included build for ios, and run ios, android, and web versions of the app.
 3. To run as an app on physical ios devices, open the `ios` directory in Xcode as a project and build to a physical device. Note that changes made to the project should be followed with `yarn build:ios` to propagate to Xcode builds.
 
 <img src="assets/splash.png" width="250"/>
