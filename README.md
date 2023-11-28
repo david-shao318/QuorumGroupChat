@@ -8,7 +8,7 @@ A group chat with a _quorum_.
 
 Click the image below to see a demo ([https://youtu.be/44Xd-_JBUJs](url)).
 
-<a href="https://youtu.be/44Xd-_JBUJs"><img width="589" src="https://github.com/david-shao318/QuorumGroupChat/assets/57266876/8d8667cc-e5ff-4c91-b8d8-09b722b8bfd9"></a>
+<a href="https://youtu.be/44Xd-_JBUJs" target="_blank"><img width="589" src="https://github.com/david-shao318/QuorumGroupChat/assets/57266876/8d8667cc-e5ff-4c91-b8d8-09b722b8bfd9"></a>
 
 Messages are encrypted using a secret sharing scheme, divided up among all members of the group. Every user who sees a message contributes one _share_ to decrypt it. Once a _quorum_ of members have seen the message, it is automatically decrypted. As long as the _quorum_ remains online, the group chat functions as usual.
 
