@@ -2,13 +2,13 @@
 
 A group chat with a _quorum_.
 
-React Native. Expo. Firebase Authentication. Cloud Firestore. Node.js.
+**React Native. Expo. Firebase and Cloud Firestore. Node.js.**
 
 ## Demo
 
 Click the image below to see a demo ([https://youtu.be/44Xd-_JBUJs](url)).
 
-<a href="https://youtu.be/44Xd-_JBUJs"><img src="assets/splash.png" width="200"/></a>
+<a href="https://youtu.be/44Xd-_JBUJs"><img width="589" src="https://github.com/david-shao318/QuorumGroupChat/assets/57266876/8d8667cc-e5ff-4c91-b8d8-09b722b8bfd9"></a>
 
 Messages are encrypted using a secret sharing scheme, divided up among all members of the group. Every user who sees a message contributes one _share_ to decrypt it. Once a _quorum_ of members have seen the message, it is automatically decrypted. As long as the _quorum_ remains online, the group chat functions as usual.
 
@@ -27,6 +27,8 @@ It is necessary to work over a finite field for encryption, as over the reals, f
 1. Install packages with `yarn install` in the main directory.
 2. To run with Expo, use `yarn start`. In this state, you can switch between Expo Go and the included build for ios, and run ios, android, and web verions of the app.
 3. To run as an app on physical ios devices, open the `ios` directory in Xcode as a project and build to a physical device. Note that changes made to the project should be followed with `yarn build:ios` to propagate to Xcode builds.
+
+<img src="assets/splash.png" width="250"/>
 
 #### License: MIT
 
