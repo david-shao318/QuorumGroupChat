@@ -176,7 +176,7 @@ export default function Chat() {
             user={{
                 _id: auth?.currentUser?.email,
                 name: auth?.currentUser?.displayName,
-                avatar: 'https://cdn.icon-icons.com/icons2/2716/PNG/512/user_circle_icon_172814.png'  // TODO: allow changes to user's profile picture
+                avatar: auth?.currentUser?.photoURL === null ? require('../assets/user.png') : auth?.currentUser?.photoURL
             }}
         />
     );

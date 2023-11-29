@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, TouchableOpacity, Image, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Image, StyleSheet, Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from '@expo/vector-icons';
 import colors from '../config/colors';
@@ -8,13 +8,37 @@ import { auth, database } from '../config/firebase';
 import { updateProfile } from 'firebase/auth';
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 
+
 // home screen
 // TODO: add search feature to header
-// TODO: add profile picture CHANGE to header
 // TODO: add multiple chat group functionality and display in chat list
 const Home = () => {
 
     const navigation = useNavigation();
+
+    const userPicAlert = () =>
+        Alert.prompt('Add a Profile Picture', 'Enter the URL to Your Photo', [
+                {text: 'OK', onPress: (text) => {
+                    const usernamesQuery = query(collection(database, 'usernames'), where('email', '==', auth?.currentUser?.email));
+                    onSnapshot(usernamesQuery, (querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            updateProfile(auth.currentUser, {
+                                photoURL: text
+                            }).then(() => console.log('Photo added: ', doc.data().name))
+                            .catch(error => console.log('Error adding photo: ', error));
+                        });
+                    });
+                }},
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Canceled photo update'),
+                    style: 'cancel',
+                },
+            ],
+            'plain-text',
+            auth?.currentUser?.photoURL,
+            'url'
+        );
 
     // update username upon first login
     if (auth?.currentUser?.displayName === null) {
@@ -35,16 +59,36 @@ const Home = () => {
             headerLeft: () => (
                 <FontAwesome name="search" size={24} color={colors.gray} style={{marginLeft: 15}}/>
             ),
-            headerRight: () => (
-                <Image
-                    source={{ uri: 'https://cdn.icon-icons.com/icons2/2716/PNG/512/user_circle_icon_172814.png' }}
-                    style={{
-                        width: 40,
-                        height: 40,
-                        marginRight: 15,
-                    }}
-                />
-            ),
+            headerRight: () => {
+                if (auth?.currentUser?.photoURL === null)
+                    return (
+                        <TouchableOpacity onPress={userPicAlert}>
+                            <Image
+                                source={require('../assets/user.png')}
+                                style={{
+                                    width: 40,
+                                    height: 40,
+                                    marginRight: 15,
+                                    borderRadius: 20
+                                }}
+                            />
+                        </TouchableOpacity>
+                    );
+                else
+                    return (
+                        <TouchableOpacity onPress={userPicAlert}>
+                            <Image
+                                source={{ uri: auth?.currentUser?.photoURL }}
+                                style={{
+                                    width: 40,
+                                    height: 40,
+                                    marginRight: 15,
+                                    borderRadius: 20
+                                }}
+                            />
+                        </TouchableOpacity>
+                    );
+            },
         });
     }, [navigation]);
 

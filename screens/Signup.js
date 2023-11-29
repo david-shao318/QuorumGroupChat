@@ -6,7 +6,6 @@ import { collection, addDoc } from 'firebase/firestore';
 const backImage = require("../assets/backImage.png");
 
 
-
 // signup screen
 export default function Signup({ navigation }) {
 
