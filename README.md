@@ -20,7 +20,7 @@ This project implements a version of Shamir's secret sharing, where a secret num
 
 ![image](https://wikimedia.org/api/rest_v1/media/math/render/svg/c592c649fc468bcf4b4881e5003b3de3586f2368)
 
-It is necessary to work over a finite field for encryption, as over the reals, for instance, a partial reconstruction can occur in a way that eliminates possiblilities for $f$ with increasingly many shares. This implementation encrypts UTF-8 strings and produces hex-string shares, which are then displayed as UTF-8 strings, removing invalid or undisplayable characters.
+It is necessary to work over a finite field for encryption, as over the reals, for instance, a partial reconstruction can occur in a way that eliminates possibilities for $f$ with increasingly many shares. This implementation encrypts UTF-8 strings and produces hex-string shares, which are then displayed as UTF-8 strings, removing invalid or undisplayable characters.
 
 ## Installation
 
